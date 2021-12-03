@@ -5,6 +5,17 @@ class AdminController{
     index(req,res){
         res.render('admin/admin')
     }
+    updateOne(req,res,next){
+        teacherDB.findById(req.params.id)
+            .then(
+                member => {member.tinhTrang = "Đã duyệt" ,
+                member.save(),
+                res.redirect('back')
+            }
+            )
+            .catch(next)
+       
+    }
     confirm(req,res,next){
         teacherDB.find()
             .then(members => res.render('admin/confirmRequire',{		
