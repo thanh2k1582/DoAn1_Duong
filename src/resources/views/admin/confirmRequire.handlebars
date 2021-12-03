@@ -1,0 +1,63 @@
+{{>header}}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã sinh viên</th>
+      <th scope="col">Phòng thuê</th>
+      <th scope="col">Máy thuê</th>
+      <th scope="col">Thời gian đăng ký</th>
+      <th scope="col">Tình trạng</th>
+      <th scope="col" colspan="2" >Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each member}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.mssv}}</td>
+      <td>{{this.phongDk}}</td>
+      <td>{{this.mayDk}}</td>
+      <td> ngày {{this.ngaySd}} từ {{this.tuTiet}} đến {{this.denTiet}}</td>
+      <td><a href="#">{{this.tinhTrang}}</a></td>
+      <td >
+        <button type="button" class="btn btn-secondary mr-">Duyệt</button>
+        <button type="button" class="btn btn-secondary">Xóa</button>
+
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã giảng viên</th>
+      <th scope="col">Phòng thuê</th>
+      <th scope="col">Mục đích</th>
+      <th scope="col">Thời gian đăng ký</th>
+      <th scope="col">Tiết học đăng ký</th>
+      <th scope="col">Tình trạng</th>
+      <th scope="col" colspan="2" >Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each members}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.mssv}}</td>
+      <td>{{this.phongDk}}</td>
+      <td>{{this.mucdich}}</td>
+      <td> ngày {{this.ngaySd}}</td>
+      <td> {{this.tuTiet}} - {{this.denTiet}}</td>
+      <td><a href="#">{{this.tinhTrang}}</a></td>
+      <td >
+        <button type="button" class="btn btn-secondary mr-">Duyệt</button>
+        <button type="button" class="btn btn-secondary">Xóa</button>
+
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
