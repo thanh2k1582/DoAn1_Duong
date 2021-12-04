@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 const studentRegis = new Schema({
     _id: {
         type: String,
@@ -16,17 +20,26 @@ const studentRegis = new Schema({
 },{
     timestamps: true
 })
-// studentRegis.pre('save',async (next)=>{
-//     try{
-//         const salt = await bcrypt.genSalt(10)
-//         const hashedPassword = await bcrypt.hash(this.mk,salt)
-//         this.mk = hashedPassword
-//         next()
-//     }
-//     catch(err){
-//         next(err);
-//     }
-// })
-
-
+studentRegis.pre("save", function (next) {
+    const user = this
+  
+    if (this.isModified("mk") || this.isNew) {
+      bcrypt.genSalt(10, function (saltError, salt) {
+        if (saltError) {
+          return next(saltError)
+        } else {
+          bcrypt.hash(user.mk, salt, function(hashError, hash) {
+            if (hashError) {
+              return next(hashError)
+            }
+  
+            user.mk = hash
+            next()
+          })
+        }
+      })
+    } else {
+      return next()
+    }
+  })
 module.exports =  mongoose.model('loginAccount', studentRegis);
