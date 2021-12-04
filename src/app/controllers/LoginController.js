@@ -31,6 +31,9 @@ class LoginController{
                 if(docs.chucvu == "3"){
                     res.redirect('/teacher')
                 }
+                if(docs.chucvu == "2"){
+                    res.redirect('/admin')
+                }
             }
         })
         

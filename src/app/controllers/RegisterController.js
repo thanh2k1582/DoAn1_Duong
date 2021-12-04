@@ -7,7 +7,7 @@ class RegisterController{
     const newAcc = new loginAccount(req.body)
     newAcc.save()
         .then(()=>{
-            res.redirect('/login')}) //quay về trang chủ
+            res.redirect('/admin')}) //quay về trang chủ
         .catch(erro => {
     })
 

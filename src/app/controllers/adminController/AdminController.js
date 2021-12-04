@@ -5,7 +5,7 @@ class AdminController{
     index(req,res){
         res.render('admin/admin')
     }
-    updateOne(req,res,next){
+    updateOneTeacher(req,res,next){
         teacherDB.findById(req.params.id)
             .then(
                 member => {member.tinhTrang = "Đã duyệt" ,
@@ -14,25 +14,38 @@ class AdminController{
             }
             )
             .catch(next)
-       
     }
-    confirm(req,res,next){
+    updateOneStudent(req,res,next){
+        studentDB.findById(req.params.id)
+            .then(
+                member => {member.tinhTrang = "Đã duyệt" ,
+                member.save(),
+                res.redirect('back')
+            }
+            )
+            .catch(next)
+    }
+    confirmTeacher(req,res,next){
         teacherDB.find()
-            .then(members => res.render('admin/confirmRequire',{		
+            .then(members => res.render('admin/confirmRequireTeacher',{		
                 members : mutipleMongooseToObject(members),
                 helpers:{
                     sum : (a,b) => a+b,
                 }						
-            }))
+            })
+            )
             .catch(next)
-        studentDB.find()
-            .then(member => res.render('admin/confirmRequire',{		
+    }
+    confirmStudent(req,res,next){
+         studentDB.find()
+            .then(member => res.render('admin/confirmRequireStudent',{		
                 member : mutipleMongooseToObject(member),
                 helpers:{
                     sum : (a,b) => a+b,
                 }						
             }))
             .catch(next)
+       
         
     }
 }
