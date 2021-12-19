@@ -1,5 +1,8 @@
-{{>headerAdmin}}
-<table class="table">
+{{>silderBar}}
+<div class="main-content">
+  {{>headerAdmin}}
+  <main>
+      <table class="table">
   <thead>
     <tr>
       <th scope="col">STT</th>
@@ -21,15 +24,18 @@
       <td> ngày {{this.ngaySd}} từ {{this.tuTiet}} đến {{this.denTiet}}</td>
       <td><a href="#">{{this.tinhTrang}}</a></td>
       <td >
-        <button type="button" class="btn btn-secondary mr-" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{this._id}}"
+      <button type="button" class="btn btn-secondary mr-" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{this._id}}"
         >Duyệt</button>
-        <button type="button" class="btn btn-secondary">Xóa</button>
-
+      <button type="button" class="btn btn-secondary">Xóa</button>
+      <a href="/admin/confirmStudent/{{this._id}}/seenReport" id="root"></a>
       </td>
     </tr>
     {{/each}}
   </tbody>
-</table>
+      </table>
+  </main>
+</div>
+
 {{!-- modal duyệt --}}
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

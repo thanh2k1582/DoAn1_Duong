@@ -1,52 +1,66 @@
 const loginAccount = require('../model/loginDB')
+const bcrypt = require("bcrypt");
 
 class LoginController{
     login(req,res){
         res.render('register_login/login');
     }
-    submit(req,res){
+    async submit(req,res){
         var email = req.body.email;
         var password = req.body.password;
-        loginAccount.findOne({email:email},function(err,docs){
-            if (err){
-                console.log(err)
-            }
-            else{
-                if(docs == null){
-                    res.json("email không tồn tại")
-                    return;
-                }
-                if(docs.mk !== password){
-                    res.json("mật khẩu không đúng")
-                    // docs.email.value() = req.body.email;
-                    return ;
-                }
-                res.cookie('userID',docs._id)
+        const user = await loginAccount.findOne({ email: email });
+        if(user){
+            const validPassword = await bcrypt.compare(password, user.mk);
+            if (validPassword) {
+                res.cookie('userID',user._id)
                 res.cookie('mssv',email)
-                res.cookie('chucvu',docs.chucvu)
-                if(docs.chucvu == "4"){
+                res.cookie('chucvu',user.chucvu)
+                if(user.chucvu == "4"){
                     res.redirect('/student')
                     return;
                 }
-                if(docs.chucvu == "3"){
+                if(user.chucvu == "3"){
                     res.redirect('/teacher')
                 }
-                if(docs.chucvu == "2"){
+                if(user.chucvu == "2"){
                     res.redirect('/admin')
                 }
-            }
-        })
-        
-        
-        // res.redirect('/student')
-                            // loginAccount.find({email:req.body.email , mk:req.body.password},function(err,loginAccount){
-                            //     if(!err) {
-                            //         // res.send("hhello")
-                            //         res.redirect('/student')
-                            //         return;
-                            //     }
-                            //     res.status(400).json({error: 'lỗi'});
-                            //     })
+              } else {
+                res.status(400).json({ error: "Sai mật khẩu" });
+              }
+        }
+        else{
+            res.json("ko có user")
+        }
+        //  loginAccount.findOne({email:email},function(err,docs){
+        //     if (err){
+        //         console.log(err)
+        //     }
+        //     else{
+        //         if(docs == null){
+        //             res.json("email không tồn tại")
+        //             return;
+        //         }
+        //         if(docs.mk !== password){
+        //             res.json("mật khẩu không đúng")
+        //             // docs.email.value() = req.body.email;
+        //             return ;
+        //         }
+        //         res.cookie('userID',docs._id)
+        //         res.cookie('mssv',email)
+        //         res.cookie('chucvu',docs.chucvu)
+        //         if(docs.chucvu == "4"){
+        //             res.redirect('/student')
+        //             return;
+        //         }
+        //         if(docs.chucvu == "3"){
+        //             res.redirect('/teacher')
+        //         }
+        //         if(docs.chucvu == "2"){
+        //             res.redirect('/admin')
+        //         }
+        //     }
+        // })
     }
 }
 module.exports = new LoginController;

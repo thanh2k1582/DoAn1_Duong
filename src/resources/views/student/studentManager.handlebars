@@ -1,5 +1,8 @@
-{{>header}}
-<table class="table">
+{{>silderBarSV_GV}}
+<div class="main-content">
+  {{>header}}
+  <main>
+      <table class="table">
   <thead>
     <tr>
       <th scope="col">STT</th>
@@ -24,6 +27,7 @@
       <td>{{this.tuTiet}}</td>
       <td>{{this.denTiet}}</td>
       <td>{{this.tinhTrang}}</td>
+      <td><a href="#"><button type="button" class="btn btn-dark" data-target="#baocaoModal" data-toggle="modal" data-id="{{this._id}}">Báo cáo</button></a></td>
       <td><a href="student/{{this._id}}/edit"><button type="button" class="btn btn-dark">Sửa</button></a></td>
       <td><button type="button" class="btn btn-dark" data-target="#exampleModal" data-toggle="modal" data-id="{{this._id}}">Xóa</button></td>
     </tr>
@@ -31,7 +35,11 @@
   </tbody>
 </table>
 <a  class="btn btn-primary" href="/student/newRegister">Đăng ký mới</a>
-{{!-- modal --}}
+  </main>
+</div>
+
+
+{{!-- modal xóa--}}
 <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -52,6 +60,41 @@
   </div>
 </div>
 {{!-- end modal --}}
+{{!-- modal Báo cáo --}}
+<form method="POST" name="reportForm">
+    <div class="modal" tabindex="-1" role="dialog" id="baocaoModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Báo cáo vấn đề</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="md-form">
+              <label for="form7">Chọn và ghi rõ vấn đề bạn muốn báo cáo</label>
+              <select class="browser-default custom-select" name="selectReport">
+                  <option selected >Chọn vấn đề </option>
+                  <option value="Phòng">Phòng </option>
+                  <option value="Máy">Máy </option>
+                  <option value="Phần mềm">Phần mềm</option>
+                  <option value="Internet">Internet</option>
+                  <option value="Khác">Khác</option>
+              </select>
+              <textarea id="form7" class="md-textarea form-control mt-2" rows="3" name="textareareport"></textarea>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"  id="btnReport">Báo cáo</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+{{!-- end modal báo cáo --}}
 <form  method="POST" name="deleteForm"></form>
 <script>
   document.addEventListener("DOMContentLoaded",function(){
@@ -65,6 +108,20 @@
       btnDelete.onclick = function(){
           deleteForm.action = '/student/'+memberId+'/delete'
           deleteForm.submit();
+      }
+
+      var reportId;
+      $('#baocaoModal').on('show.bs.modal', function (event) {
+             var button = $(event.relatedTarget)
+             reportId= button.data('id') 
+       })
+      var reportForm = document.forms['reportForm'];
+      var btnReport = document.getElementById('btnReport');
+      console.log(btnReport)
+      btnReport.onclick = function(){
+          reportForm.action = '/student/'+reportId+'/report'
+          reportForm.submit();
+          alert("Xin cảm ơn bạn đã phản hồi")
       }
   })
 

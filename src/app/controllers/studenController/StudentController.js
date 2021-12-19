@@ -22,7 +22,6 @@ class StudentController{
                 member : mongooseToObject(member)
             }))
             .catch(next)
-        // res.render('student/studentRegis')
     }
     delete(req,res,next){
         studentDB.deleteOne({ _id: req.params.id},req.body)
@@ -36,6 +35,13 @@ class StudentController{
             .then(() => res.redirect('/student'))
             .catch(next)
         // res.render('student/studentRegis')
+    }
+    report(req,res,next){
+        // res.json(req.body)
+        studentDB.updateOne({_id:req.params.id},req.body)
+            .then(() => res.redirect('/student'))
+            .catch(next)
+        res.render('student/studentRegis')
     }
     store(req,res){
         const member = new studentDB(req.body)

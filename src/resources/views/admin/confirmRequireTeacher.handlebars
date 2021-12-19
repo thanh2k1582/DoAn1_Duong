@@ -1,5 +1,8 @@
-{{>headerAdmin}}
-<table class="table mt-4">
+{{>silderBar}}
+<div class="main-content">
+  {{>headerAdmin}}
+  <main>
+      <table class="table mt-4">
   <thead>
     <tr>
       <th scope="col">STT</th>
@@ -31,6 +34,9 @@
     {{/each}}
   </tbody>
 </table>
+  </main>
+</div>
+
 {{!-- modal duyệt --}}
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

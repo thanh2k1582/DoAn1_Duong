@@ -10,6 +10,8 @@ const teacherRegis = new Schema({
     ngaySd: { type: String, default: 'hahaha' },
     tuTiet: { type: String, default: 'hahaha' },
     denTiet: { type: String, default: 'hahaha' },
+    selectReport: { type: String},
+    textareareport: { type: String },
     soSV: { type: String, default: 'hahaha' },
     tinhTrang: { type: String, default: 'Chưa duyệt' },
 },{

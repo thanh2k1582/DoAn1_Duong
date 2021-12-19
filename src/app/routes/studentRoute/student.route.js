@@ -4,6 +4,7 @@ const studentController = require('../../controllers/studenController/StudentCon
 var authMiddleware = require('../../../middleware/loginMiddleware.js')
 router.post('/newRegister',studentController.store)
 router.use('/newRegister',studentController.newRegister)
+router.post('/:id/report',studentController.report)
 router.use('/:id/edit',studentController.edit)
 router.get('/:id/delete',studentController.delete)
 router.put('/:id',studentController.update)

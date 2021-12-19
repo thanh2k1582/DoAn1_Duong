@@ -37,6 +37,13 @@ class StudentController{
             .catch(next)
         // res.render('student/studentRegis')
     }
+    report(req,res,next){
+        // res.json(req.body)
+        teacherDB.updateOne({_id:req.params.id},req.body)
+            .then(() => res.redirect('/teacher'))
+            .catch(next)
+        res.render('teacher/teacherRegis')
+    }
     store(req,res){
         const member = new teacherDB(req.body)
         member["userID"] = req.cookies.userID
